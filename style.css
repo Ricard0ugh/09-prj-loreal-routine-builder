@@ -11,6 +11,7 @@ body {
   color: #333;
   display: flex;
   justify-content: center;
+  direction: rtl; /* Switch text direction to right-to-left */
 }
 
 .page-wrapper {
@@ -40,6 +41,7 @@ body {
 .search-section {
   margin: 30px 0;
   display: flex;
+  flex-direction: row-reverse; /* Reverse the order of the category filter and search input */
 }
 
 .search-section select {
@@ -58,6 +60,23 @@ body {
   border-color: #666;
 }
 
+/* Search input field styles */
+#searchInput {
+  margin-right: 10px; /* Adjust margin for RTL layout */
+  margin-left: 0; /* Remove left margin */
+  flex: 1;
+  padding: 16px;
+  font-size: 18px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background-color: white;
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: #666;
+}
+
 /* chat section */
 .chatbox {
   margin: 40px 0;
@@ -72,13 +91,99 @@ body {
 }
 
 .chat-window {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
   height: 250px;
   overflow-y: auto;
   background: #fafafa;
   margin-bottom: 20px;
+}
+
+/* wrapper for each message */
+.chat-message {
+  display: flex;
+  width: 100%;
+}
+
+/* message bubble common styles */
+.message-bubble {
+  max-width: 78%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* text inside bubble */
+.message-text {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #111;
+  white-space: pre-wrap;
+}
+
+/* user messages: right aligned, dark bubble with white text */
+.chat-message.user {
+  justify-content: flex-start; /* Align user messages to the right */
+}
+.chat-message.user .message-bubble {
+  background: #111;
+  color: #fff;
+  border-bottom-left-radius: 4px; /* Adjust border radius for RTL */
+  border-bottom-right-radius: 16px; /* Adjust border radius for RTL */
+}
+/* make sure the text inside the user's bubble is white (overrides .message-text) */
+.chat-message.user .message-text {
+  color: #fff;
+}
+
+/* assistant messages: left aligned, light bubble */
+.chat-message.assistant {
+  justify-content: flex-end; /* Align assistant messages to the left */
+}
+.chat-message.assistant .message-bubble {
+  background: #fff;
+  color: #111;
+  border-bottom-right-radius: 4px; /* Adjust border radius for RTL */
+  border-bottom-left-radius: 16px; /* Adjust border radius for RTL */
+  border: 1px solid #eee;
+}
+
+/* Typing indicator styles */
+.message-dots {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.message-dots span {
+  width: 6px;
+  height: 6px;
+  background: #888;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.3;
+  animation: blink 1s infinite;
+}
+.message-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.message-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes blink {
+  0% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
 }
 
 /* placeholder message */
@@ -95,6 +200,7 @@ body {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+  flex-direction: row-reverse; /* Reverse the input and button order */
 }
 
 .chat-form input {
@@ -104,6 +210,7 @@ body {
   border: none;
   border-bottom: 2px solid #ccc;
   background: transparent;
+  text-align: right; /* Align text input to the right */
 }
 
 .chat-form input:focus {
@@ -113,8 +220,8 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
-  color: #fff;
+  background: #ff003b; /* Red background */
+  color: #fff; /* White text */
   border: none;
   padding: 12px;
   width: 48px;
@@ -123,16 +230,12 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border-radius: 8px;
   transition: background 0.3s;
 }
 
 .chat-form button:hover {
-  background: #666666;
-}
-
-.chat-form button:focus {
-  outline: 2px solid #000;
-  outline-offset: 2px;
+  background: #e60035; /* Darker red on hover */
 }
 
 /* visually hidden */
@@ -158,16 +261,17 @@ body {
 
 .site-footer nav {
   margin-top: 12px;
+  flex-direction: row-reverse; /* Reverse the order of footer links */
 }
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--primary-color); /* Use primary color */
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--secondary-color); /* Use secondary color on hover */
 }
 
 /* products grid */
@@ -176,6 +280,7 @@ body {
   flex-wrap: wrap;
   gap: 20px;
   margin: 30px 0;
+  flex-direction: row-reverse; /* Reverse the product grid layout */
 }
 
 .product-card {
@@ -186,6 +291,9 @@ body {
   display: flex;
   gap: 15px;
   min-height: 160px;
+  position: relative; /* Ensure the description overlay is positioned relative to the card */
+  overflow: hidden; /* Prevent the overlay from spilling out of the card */
+  text-align: right; /* Align product card content to the right */
 }
 
 .product-card img {
@@ -213,12 +321,47 @@ body {
   color: #666;
 }
 
+/* Product description overlay */
+.product-description {
+  position: absolute;
+  top: 100%; /* Start hidden below the card */
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+  color: #fff !important; /* Force text color to white */
+  padding: 20px 10px; /* Add extra padding to the top */
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  transition: top 0.3s ease; /* Smooth transition for the hover effect */
+  z-index: 1; /* Ensure the overlay appears above other content */
+  max-height: 100%; /* Ensure the overlay doesn't exceed the card's height */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.product-description p {
+  color: #fff !important; /* Ensure paragraph text is white */
+}
+
+.product-card:hover .product-description {
+  top: 0; /* Slide the description into view on hover */
+}
+
+/* Hover effect for product cards */
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--secondary-color); /* Use secondary color */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+}
+
 /* selected products */
 .selected-products {
   margin: 40px 0;
   padding: 20px;
   border: 2px solid #000;
   border-radius: 8px;
+  text-align: right; /* Align the selected products section to the right */
 }
 
 .selected-products h2 {
@@ -228,7 +371,7 @@ body {
 
 #selectedProductsList {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column; /* Stack items vertically */
   gap: 10px;
 }
 
@@ -238,8 +381,8 @@ body {
   padding: 16px;
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
-  background: #000;
+  color: #fff; /* White text */
+  background: #ff003b; /* Red background */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -247,9 +390,63 @@ body {
 }
 
 .generate-btn:hover {
-  background: #666;
+  background: #e60035; /* Darker red on hover */
 }
 
 .generate-btn i {
   margin-right: 8px;
+}
+
+/* Highlight selected product cards */
+.product-card.selected {
+  border: 2px solid var(--primary-color); /* Use primary color */
+  background-color: #f9f9f9;
+}
+
+/* Selected products list styles */
+.selected-product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0; /* Set background to grey */
+  flex-direction: row-reverse; /* Reverse the layout of selected product items */
+}
+
+.selected-product-item button {
+  background: none; /* Remove background color */
+  color: var(--primary-color); /* Use primary color */
+  border: none;
+  font-size: 18px; /* Make the "X" slightly larger */
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  margin-left: 10px; /* Adjust button spacing for RTL */
+  margin-right: 0; /* Remove right margin */
+}
+
+.selected-product-item button:hover {
+  color: var(--secondary-color); /* Use secondary color on hover */
+}
+
+/* Language selector styles */
+.language-selector {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.language-selector select {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid var(--primary-color); /* Use primary color */
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.language-selector select:focus {
+  outline: none;
+  border-color: var(--secondary-color); /* Use secondary color */
 }

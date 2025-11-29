@@ -1,0 +1,14 @@
+# Template Wrangler config — update values before deploying.
+name = "loreal-routine-worker"  # change to your worker name
+main = "worker.js"
+type = "javascript"
+workers_dev = true
+
+# Replace with your account id if publishing to a zone:
+# account_id = "YOUR_ACCOUNT_ID"
+# If you publish to a specific route, add zone_id and route here:
+# zone_id = "YOUR_ZONE_ID"
+# route = "example.com/*"
+
+# You can add compatibility_date or compatibility_flags if needed:
+# compatibility_date = "2025-01-01"
